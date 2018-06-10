@@ -195,15 +195,13 @@ exports.load = async(conn, id) => {
     });
 };
 
-exports.getHome = async(conn, type) => {
+exports.getHome = async(conn) => {
     let sql;
-    let data = [type];
 
-    sql = 'SELECT title, author_name, update_time, subtitle FROM article WHERE is_deleted = 0 AND is_public_show = 1 ORDER BY update_time DESC LIMIT 10';
+    sql = 'SELECT title, author_name, update_time, subtitle FROM article WHERE is_deleted = 0 AND is_public_show = 1 ORDER BY update_time DESC LIMIT 20';
     return await DB.find({
         connection: conn,
-        sql: sql,
-        data: data
+        sql: sql
     });
 };
 

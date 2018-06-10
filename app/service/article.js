@@ -2,16 +2,14 @@
 const DB = require('../common/mysql');
 const articleDB = require('../db/article');
 const ApiErrorNames = require('../error/apiErrorNames');
-const ApiError = require('../error/apiError');
 
-exports.getHome = async({type}) => {
+exports.getHome = async() => {
     let conn;
     let result;
 
-    type = +type;
     try {
         conn = await DB.getConnection();
-        result = await articleDB.getHome(conn, type);
+        result = await articleDB.getHome(conn);
     } finally {
         await DB.release(conn);
     }

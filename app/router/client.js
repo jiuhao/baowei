@@ -18,13 +18,9 @@ router.post("/login", async(ctx)=> {
 
 // 查看最新发布
 router.get("/home/publish/get", async(ctx)=> {
-    ctx.data = await articleService.getHome({type: 1});
+    ctx.data = await articleService.getHome();
 });
 
-// 查看通知通告
-router.get("/home/notice/get", async(ctx)=> {
-    ctx.data = await articleService.getHome({type: 2});
-});
 
 // 查看块数据
 router.get("/home/block", async(ctx)=> {
