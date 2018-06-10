@@ -1,0 +1,9 @@
+{
+  "port": 7001,
+  "request_url": "",
+  "accessip": [
+    "127.0.0.1"
+  ],
+  "session_expire": 86400,
+  "file_prefix": "http://localhost:7001"
+}

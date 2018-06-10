@@ -1,0 +1,35 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "bugs": {
+    "email": ""
+  },
+  "scripts": {
+    "product": "pm2 start pm2.json",
+    "test": "NODE_ENV=test pm2 start app.js --watch",
+    "dev": "NODE_ENV=dev pm2 start app.js --watch"
+  },
+  "dependencies": {
+    "busboy": "^0.2.14",
+    "crypto-js": "^3.1.9-1",
+    "ioredis": "*",
+    "ipaddr.js": "^1.4.0",
+    "koa": "2.2.0",
+    "koa-bodyparser": "*",
+    "koa-convert": "*",
+    "koa-cors": "*",
+    "koa-router": "7.1.1",
+    "koa-static-cache": "^5.1.2",
+    "log4js": "1.1.1",
+    "mail": "*",
+    "mongoist": "*",
+    "mysql": "*",
+    "nodemailer": "*",
+    "request": "*",
+    "save": "^2.3.2"
+  }
+}
