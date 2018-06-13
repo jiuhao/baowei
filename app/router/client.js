@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const adminService = require('../service/admin/adm');
 const articleService = require('../service/article');
+const fileService = require('../service/file');
 const router = new Router();
 const Redis = require('../common/redis');
 const uuid = require('uuid');
@@ -35,6 +36,16 @@ router.post("/article/list", async(ctx)=> {
 // 查看详情
 router.post("/article/load", async(ctx)=> {
     ctx.data = await articleService.loadByClient(ctx.request.body);
+});
+
+// 查看文件列表
+router.get("/file/block/get", async(ctx)=> {
+    ctx.data = await fileService.getBlock();
+});
+
+// 查看文件列表
+router.get("/banner/block/list", async(ctx)=> {
+    ctx.data = await articleService.listBlockBanner();
 });
 
 module.exports = router;

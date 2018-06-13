@@ -2,6 +2,7 @@
 const DB = require('../common/mysql');
 const articleDB = require('../db/article');
 const ApiErrorNames = require('../error/apiErrorNames');
+const config = require('../config');
 
 exports.getHome = async() => {
     let conn;
@@ -36,7 +37,7 @@ exports.getBlock = async() => {
         }
     }
 
-    return result;
+    return obj;
 };
 
 /**
@@ -77,6 +78,23 @@ exports.loadByClient = async({id}) => {
         result = await articleDB.load(conn, id);
     } finally {
         await DB.release(conn);
+    }
+
+    return result;
+};
+
+exports.listBlockBanner = async() => {
+    let conn;
+    let result;
+
+    try {
+        conn = await DB.getConnection();
+        result = await articleDB.listBlockBanner(conn);
+    } finally {
+        await DB.release(conn);
+    }
+    for (let i = 0; i < result.length; i++) {
+        result[i].subimg = `${config.sys.file_prefix}${result[i].subimg}`;
     }
 
     return result;

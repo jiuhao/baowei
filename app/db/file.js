@@ -76,3 +76,13 @@ exports.count = async(conn, param) => {
 
     return result.countNum;
 };
+
+exports.getBlock = async(conn) => {
+    let sql;
+
+    sql = 'SELECT name, url FROM file ORDER BY create_time DESC LIMIT 6';
+    return await DB.find({
+        connection: conn,
+        sql: sql
+    })
+};

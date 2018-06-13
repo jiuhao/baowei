@@ -239,15 +239,25 @@ exports.countByClient = async(conn, param) => {
 exports.getBlock = async(conn) => {
     let sql;
 
-    sql = `SELECT a1.* FROM article a1 
-   INNER JOIN (SELECT a.type,b.update_time FROM article a 
-         LEFT JOIN article b 
-         ON a.type = b.type AND a.update_time <= b.update_time
-         GROUP BY a.type,a.update_time
-         HAVING COUNT(b.update_time) <= 10
-   ) b1
-  ON a1.type = b1.type AND a1.update_time = b1.update_time
-ORDER BY a1.type,b1.update_time DESC`;
+    sql = `(SELECT * FROM article where type = 1 order by update_time limit 6)
+union
+(SELECT * FROM article where type = 2 order by update_time limit 6)
+union
+(SELECT * FROM article where type = 3 order by update_time limit 6)
+union
+(SELECT * FROM article where type = 4 order by update_time limit 6)
+union
+(SELECT * FROM article where type = 5 order by update_time limit 6)
+union
+(SELECT * FROM article where type = 6 order by update_time limit 6)`;
+    return await DB.find({
+        connection: conn,
+        sql: sql
+    });
+};
+
+exports.listBlockBanner = async(conn) => {
+    let sql = 'SELECT id, subimg, title FROM article WHERE is_deleted = 0 AND is_public_show = 1 AND length(subimg) > 0 LIMIT 5';
     return await DB.find({
         connection: conn,
         sql: sql
