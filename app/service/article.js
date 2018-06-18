@@ -58,6 +58,9 @@ exports.listByClient = async(param) => {
     } finally {
         await DB.release(conn);
     }
+    for (let i = 0; i < list.length; i++) {
+        list[i].subimg = `${config.sys.file_prefix}${list[i].subimg}`;
+    }
 
     return {
         total: total,

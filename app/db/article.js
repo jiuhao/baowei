@@ -198,7 +198,7 @@ exports.load = async(conn, id) => {
 exports.getHome = async(conn) => {
     let sql;
 
-    sql = 'SELECT title, author_name, update_time, subtitle FROM article WHERE is_deleted = 0 AND is_public_show = 1 ORDER BY update_time DESC LIMIT 20';
+    sql = 'SELECT id, title, author_name, update_time, subtitle FROM article WHERE is_deleted = 0 AND is_public_show = 1 ORDER BY update_time DESC LIMIT 20';
     return await DB.find({
         connection: conn,
         sql: sql
@@ -208,10 +208,14 @@ exports.getHome = async(conn) => {
 exports.listByClient = async(conn, param) => {
     let sql;
     let data = [];
-    let skip = (param.currentPage - 1) * param.size;
+    let skip = (param.page - 1) * param.size;
 
-    sql = 'SELECT * FROM article WHERE is_deleted = 0 AND is_public_show = 1 AND type = ? ORDER BY update_time DESC LIMIT ?,?';
-    data.push(param.type);
+    sql = 'SELECT * FROM article WHERE is_deleted = 0 AND is_public_show = 1';
+    if(param.type){
+        sql += ' AND type = ?';
+        data.push(param.type);
+    }
+    sql += ' ORDER BY update_time DESC LIMIT ?,?';
     data.push(skip);
     data.push(param.size);
     return await DB.find({
@@ -226,8 +230,11 @@ exports.countByClient = async(conn, param) => {
     let data = [];
     let result;
 
-    sql = 'SELECT COUNT(*) countNum FROM article WHERE is_deleted = 0 AND is_public_show = 1 AND type = ?';
-    data.push(param.type);
+    sql = 'SELECT COUNT(*) countNum FROM article WHERE is_deleted = 0 AND is_public_show = 1';
+    if(param.type){
+        sql += ' AND type = ?';
+        data.push(param.type);
+    }
     result = await DB.findOne({
         connection: conn,
         sql: sql,

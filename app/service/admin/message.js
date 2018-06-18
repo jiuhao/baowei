@@ -3,22 +3,6 @@ const DB = require('../../common/mysql');
 const messageDB = require('../../db/message');
 const ApiErrorNames = require('../../error/apiErrorNames');
 
-exports.add = async({content}) => {
-    let conn;
-
-    if (!content) {
-        throw new Error(ApiErrorNames.PARAM_ERROR);
-    }
-    try {
-        conn = await DB.getConnection();
-        await messageDB.add(conn, content);
-    } finally {
-        await DB.release(conn);
-    }
-
-    return 'success';
-};
-
 exports.answer = async({id, answer}) => {
     let conn;
 

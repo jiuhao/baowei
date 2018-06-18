@@ -86,3 +86,52 @@ exports.getBlock = async(conn) => {
         sql: sql
     })
 };
+
+exports.listByClient = async(conn, param) => {
+    let sql;
+    let data = [];
+    let skip = (param.page - 1) * param.size;
+    let result;
+
+    sql = 'SELECT name,url,create_time FROM file WHERE is_deleted = 0 AND is_public_show = 1';
+    if (param.keyword) {
+        sql += ' AND name LIKE ?';
+        data.push(param.keyword);
+    }
+    sql += ' ORDER BY create_time DESC LIMIT ?,?';
+    data.push(skip);
+    data.push(param.size);
+    try {
+        result = await DB.find({
+            connection: conn,
+            sql: sql,
+            data: data
+        })
+    } catch (e) {
+        throw e;
+    }
+
+    return result;
+};
+exports.countByClient = async(conn, param) => {
+    let sql;
+    let data = [];
+    let result;
+
+    sql = 'SELECT count(*) countNum FROM file WHERE is_deleted = 0 AND is_public_show = 1';
+    if (param.keyword) {
+        sql += ' AND name LIKE ?';
+        data.push(param.keyword);
+    }
+    try {
+        result = await DB.findOne({
+            connection: conn,
+            sql: sql,
+            data: data
+        })
+    } catch (e) {
+        throw e;
+    }
+
+    return result.countNum;
+};
