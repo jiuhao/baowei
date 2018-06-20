@@ -2,7 +2,7 @@
   "port": 7001,
   "request_url": "",
   "accessip": [
-    "127.0.0.1"
   ],
-  "session_expire": 86400
+  "session_expire": 86400,
+  "file_prefix": "http://118.31.13.217:7001"
 }
