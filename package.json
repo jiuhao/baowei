@@ -9,7 +9,7 @@
     "email": ""
   },
   "scripts": {
-    "product": "pm2 start pm2.json",
+    "product": "npm install && pm2 start pm2.json",
     "test": "NODE_ENV=test pm2 start app.js --watch",
     "dev": "NODE_ENV=dev pm2 start app.js --watch"
   },
